@@ -1,0 +1,11 @@
+{
+  "title": "react-forms",
+  "description": "Demo of React 19 Forms",
+  "iconUrl": "https://raw.githubusercontent.com/codesandbox/sandbox-templates/main/nextjs/.codesandbox/icon.png",
+  "tags": [
+    "react",
+    "nextjs",
+    "forms"
+  ],
+  "published": true
+}

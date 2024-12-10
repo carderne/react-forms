@@ -1,0 +1,6 @@
+db.json
+.next/
+.devcontainer/
+.codesandbox
+node_modules/
+next-env.d.ts
