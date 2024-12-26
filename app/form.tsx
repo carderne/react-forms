@@ -7,24 +7,23 @@ import { AddItemState } from "./types";
 import { FormError } from "./form-error";
 import { FormSubmit } from "./form-submit";
 import { addItemAction } from "./actions";
+import { validateItem } from "./validate";
 
 export function ItemForm() {
   const ref = useRef<HTMLFormElement>(null);
   const { addOptimistic } = useOptimisticContext();
   const [state, formAction] = useActionState<AddItemState, FormData>(
-    addItemAction,
-    {},
+    (prev, formData) => {
+      const res = validateItem(formData);
+      if (res.errors) return res;
+      addOptimistic(res.data);
+      ref.current?.reset();
+      return addItemAction(prev, formData);
+    },
+    { errors: {} },
   );
-  const optimisticAction = (formData: FormData) => {
-    const data = {
-      todo: formData.get("todo") as string,
-    };
-    addOptimistic(data);
-    ref.current?.reset();
-    formAction(formData);
-  };
   return (
-    <Form ref={ref} action={optimisticAction}>
+    <Form ref={ref} action={formAction}>
       <FormError messages={state.errors?.todo} />
       <input
         required={true}
